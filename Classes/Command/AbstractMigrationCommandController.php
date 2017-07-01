@@ -22,11 +22,12 @@ namespace Codappix\CdxMigration\Command;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
- *
+ * Provides basic implementation to ease migrations using ActiveRecord.
  */
 abstract class AbstractMigrationCommandController extends CommandController
 {
@@ -58,12 +59,12 @@ abstract class AbstractMigrationCommandController extends CommandController
     {
         $settings = $configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'CdxSite',
+            'CdxMigration',
             'Migration'
         );
 
-        if ($settings && isset($settings['migration']['dbConnection']['old'])) {
-            $this->oldConnection = $settings['migration']['dbConnection']['old'];
+        if ($settings && isset($settings['dbConnection']['old'])) {
+            $this->oldConnection = $settings['dbConnection']['old'];
         }
 
         return $this;
@@ -83,10 +84,12 @@ abstract class AbstractMigrationCommandController extends CommandController
             ];
         }
 
-        \ActiveRecord\Config::initialize(function ($configuration)  {
-            $extKey = $this->request->getControllerExtensionKey();
-            require_once('/Users/siepmann/bin/psysh');\Psy\Shell::debug(get_defined_vars(), $this);
-            $configuration->set_model_directory(ExtensionManagementUtility::extPath($extKey));
+        $extensionPath = ExtensionManagementUtility::extPath(
+            GeneralUtility::camelCaseToLowerCaseUnderscored($this->request->getControllerExtensionName())
+        );
+
+        \ActiveRecord\Config::initialize(function ($configuration) use ($extensionPath) {
+            $configuration->set_model_directory($extensionPath);
             $configuration->set_connections([
                 'from' => sprintf(
                     'mysql://%s:%s@%s/%s',
@@ -105,5 +108,4 @@ abstract class AbstractMigrationCommandController extends CommandController
             ]);
         });
     }
-
 }
