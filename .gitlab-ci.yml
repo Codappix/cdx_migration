@@ -25,3 +25,28 @@ test:php7.1:
   image: php:7.1
   script:
     - ./vendor/bin/phpunit --coverage-text --colors=never --debug
+
+test:doc:syntax: &SPHINX-DOCS
+  image: python:2.7
+  stage: test
+  before_script:
+    - pip install -r requirements.txt
+    - cd Documentation
+    - mkdir reports/
+  script:
+    - make lint
+    - '[ ! -s reports/warnings.txt ]'
+
+test:doc:external-links:
+  <<: *SPHINX-DOCS
+  script:
+    - make linkcheck
+
+build:doc:
+  <<: *SPHINX-DOCS
+  stage: build
+  script:
+    - make html
+  artifacts:
+    paths:
+      - build/html
