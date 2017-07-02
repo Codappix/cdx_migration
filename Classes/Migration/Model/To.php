@@ -74,7 +74,7 @@ abstract class To extends \ActiveRecord\Model
      */
     protected function applyTcaDefaults() : void
     {
-        $tca = $this->getTcaForTable(self::table_name());
+        $tca = $this->getTcaForTable(static::$table_name);
 
         if (isset($tca['ctrl']['tstamp'])) {
             $field = $tca['ctrl']['tstamp'];
