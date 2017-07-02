@@ -27,4 +27,5 @@ namespace Codappix\CdxMigration\Migration\Model;
 abstract class From extends \ActiveRecord\Model
 {
     public static $connection = 'from';
+    public static $primary_key = 'uid';
 }

@@ -25,6 +25,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 abstract class To extends \ActiveRecord\Model
 {
     public static $connection = 'typo3';
+    public static $primary_key = 'uid';
 
     public function injectConfiguration(ConfigurationManagerInterface $configurationManager) : To
     {
@@ -94,7 +95,7 @@ abstract class To extends \ActiveRecord\Model
 
     protected function getTcaForTable(string $table) : array
     {
-        return $GLOBALS['TCA'][$table];
+        return $GLOBALS['TCA'][$table] ?: [];
     }
 
     protected function getBeUserUid() : int
