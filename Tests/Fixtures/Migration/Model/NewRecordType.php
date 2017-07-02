@@ -31,14 +31,14 @@ class NewRecordType extends To
         $this->pid = $value;
     }
 
-    public function set_hidden($value)
-    {
-        $this->hidden = $value;
-    }
-
     public function get_pid()
     {
         return $this->pid;
+    }
+
+    public function set_hidden($value)
+    {
+        $this->hidden = $value;
     }
 
     public function get_hidden()
@@ -51,24 +51,24 @@ class NewRecordType extends To
         $this->tstampField = $value;
     }
 
-    public function set_crdateField($value)
-    {
-        $this->crdateField = $value;
-    }
-
-    public function set_cruserIdField($value)
-    {
-        $this->cruserIdField = $value;
-    }
-
     public function get_tstampField()
     {
         return $this->tstampField;
     }
 
+    public function set_crdateField($value)
+    {
+        $this->crdateField = $value;
+    }
+
     public function get_crdateField()
     {
         return $this->crdateField;
+    }
+
+    public function set_cruserIdField($value)
+    {
+        $this->cruserIdField = $value;
     }
 
     public function get_cruserIdField()

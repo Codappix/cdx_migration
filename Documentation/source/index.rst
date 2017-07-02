@@ -34,7 +34,7 @@ Configuration
        }
    }
 
-Where ``<modleName>`` is the last part of FQCN excluding ``New`` prefix. E.g. the following class:
+Where ``<modelName>`` is the last part of FQCN excluding ``New`` prefix. E.g. the following class:
 ``Codappix\CdxSite\Migration\Model\NewRecordType`` is configured with ``RecordType``.
 
 Each model mapping to old DB should extend ``Codappix\CdxMigration\Migration\Model\From``.
