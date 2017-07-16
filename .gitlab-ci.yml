@@ -1,0 +1,52 @@
+cache:
+  paths:
+    - vendor/
+
+stages:
+  - test
+  - build
+
+before_script:
+  # Git for CI, unzip for composer
+  - apt-get update -yqq
+  - apt-get install git unzip -yqq
+
+  # Install and activate php extensions
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+
+  # Install composer and project dependencies
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install --no-progress --no-ansi --no-interaction
+
+# TODO: Add phpcs and phpmd as soon as we have satis and are able to require our cgl via composer
+
+test:php7.1:
+  image: php:7.1
+  script:
+    - ./vendor/bin/phpunit --coverage-text --colors=never --debug
+
+test:doc:syntax: &SPHINX-DOCS
+  image: python:2.7
+  stage: test
+  before_script:
+    - pip install -r requirements.txt
+    - cd Documentation
+    - mkdir reports/
+  script:
+    - make lint
+    - '[ ! -s reports/warnings.txt ]'
+
+test:doc:external-links:
+  <<: *SPHINX-DOCS
+  script:
+    - make linkcheck
+
+build:doc:
+  <<: *SPHINX-DOCS
+  stage: build
+  script:
+    - make html
+  artifacts:
+    paths:
+      - build/html

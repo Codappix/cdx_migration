@@ -2,7 +2,7 @@
     "name": "codappix/cdx_migration",
     "description": "Provides ground work to ease migration of content in TYPO3.",
     "type": "typo3-cms-extension",
-    "license": ["GPL-2.0+"],
+    "license": "GPL-2.0+",
     "support": {
         "issues": "http://s1.codappix.net/typo3-extensions/cdx_migration",
         "source": "http://s1.codappix.net/typo3-extensions/cdx_migration"
@@ -13,7 +13,33 @@
             "email": "coding@daniel-siepmann.de"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Codappix\\CdxMigration\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Codappix\\CdxMigration\\Tests\\": "Tests"
+        }
+    },
     "require": {
-        "typo3/cms": "~8.7.2"
+        "typo3/cms": "~8.7.2",
+        "php-activerecord/php-activerecord": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.2.0"
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/web"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/web/typo3conf/ext/",
+            "[ -L .Build/web/typo3conf/ext/cdx_migration ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/cdx_migration"
+        ]
     }
 }
