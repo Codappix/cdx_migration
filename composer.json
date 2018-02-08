@@ -2,7 +2,7 @@
     "name": "codappix/cdx_migration",
     "description": "Provides ground work to ease migration of content in TYPO3.",
     "type": "typo3-cms-extension",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "support": {
         "issues": "http://s1.codappix.net/typo3-extensions/cdx_migration",
         "source": "http://s1.codappix.net/typo3-extensions/cdx_migration"
