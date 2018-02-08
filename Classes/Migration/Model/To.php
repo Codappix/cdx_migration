@@ -51,7 +51,7 @@ abstract class To extends \ActiveRecord\Model
      * Structure:
      *      name => value
      */
-    protected function setConfiguredProperties(array $properties) : void
+    protected function setConfiguredProperties(array $properties)
     {
         foreach ($properties as $property => $value) {
             $this->$property = $value;
@@ -73,7 +73,7 @@ abstract class To extends \ActiveRecord\Model
     /**
      * Checks TCA configuration and applies default values, e.g. crdate.
      */
-    protected function applyTcaDefaults() : void
+    protected function applyTcaDefaults()
     {
         $tca = $this->getTcaForTable(static::$table_name);
 

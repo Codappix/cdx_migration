@@ -73,7 +73,7 @@ abstract class AbstractMigrationCommandController extends CommandController
     /**
      * Initialize ActiveRecord database connections.
      */
-    protected function initDbConnection() : void
+    protected function initDbConnection()
     {
         if ($this->oldConnection === []) {
             $this->oldConnection = [
